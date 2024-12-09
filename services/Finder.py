@@ -22,11 +22,9 @@ class Finder:
       while i < qtd_itens:
 
          if i < 5:
-            time.sleep(2)
             links = itens_list_elements[i].find_element(By.CSS_SELECTOR, f"#module-44034{i+1} > div > div > div:nth-child(2) > div.activityinstance > a")
 
          else:
-            time.sleep(2)
             links = itens_list_elements[i].find_element(By.CSS_SELECTOR, f"#module-440358 > div > div > div:nth-child(2) > div.activityinstance > a")
 
          Finder.questions_links.append(links.get_attribute("href"))

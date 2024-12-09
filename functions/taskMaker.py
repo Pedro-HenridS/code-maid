@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 from services.Driver import Driver
 import time
 from functions.generativeResponse import generativeResponse
+from selenium.webdriver.common.keys import Keys
 
 def taskMaker(link): # type: ignore
     browser = Driver.browser
@@ -15,23 +16,41 @@ def taskMaker(link): # type: ignore
     edit_section_link = edit_section.get_attribute("href")
     
     
-    #gera o título e a resposta
-
-    title_res = generativeResponse(f"Gere um nome de arquivo condizente com o enunciado: '{statement_text}', e coloque no final .py")
+    #gera a resposta
     res = generativeResponse(f"{statement_text}. Responda mostrando apensa o código. Não coloque ''' e nem precisa informar que a linguagem é python no início. A estrutura base deve ser a de main padrão, ou seja, def main(): return 0 if __name__ == '__main__': main() ")
 
 
     browser.get(edit_section_link)
+
+    file_name = browser.find_element(By.CSS_SELECTOR, "#vpl_ide_input_newfilename")
     
     time.sleep(2)
-    file_name = browser.find_element(By.CSS_SELECTOR, "#vpl_ide_input_newfilename")
-    ok_button = browser.find_element(By.XPATH, '/html/body/div[4]/div[3]/div/button[1]')
+    if file_name.is_displayed() == True:
+
+         title_res = generativeResponse(f"Gere um nome de arquivo condizente com o enunciado: '{statement_text}', e coloque no final .py")
+         
+         file_name.send_keys(title_res + Keys.ENTER)
+
+         print("----------------------------------------------------------------")
+         print("Arquivo do código criado!")
+         print("----------------------------------------------------------------")
+
+    else:
+         print("----------------------------------------------------------------")
+         print("Arquivo já existente!")
+         print("----------------------------------------------------------------")
+
     
-    file_name.send_keys(title_res)
+    ide_selector = browser.find_element(By.CSS_SELECTOR, "#vpl_file0 > div.ace_scroller > div.ace_content")
 
-    time.sleep(1)
-    ok_button.click()
+    browser.execute_script("arguments[0].textContent = arguments[1];", ide_selector, res)
 
+    print("----------------------------------------------------------------")
+    print(ide_selector.text)
+    print("----------------------------------------------------------------")
+
+
+    time.sleep(2)
     browser.back()
 
     
