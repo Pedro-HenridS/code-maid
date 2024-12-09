@@ -22,5 +22,5 @@ class AcessDB():
 
    
 
-if __name__ == "__acessDB__":
-    acessDB()
+if __name__ == "__AcessDB__":
+    AcessDB()

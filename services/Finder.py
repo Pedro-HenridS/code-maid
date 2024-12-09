@@ -1,14 +1,15 @@
-from functions.getElement import getElement
 from selenium.webdriver.common.by import By
+from services.Driver import Driver
 import time
 
 class Finder:
 
+   browser = Driver.browser
    questions_links = []
 
    def findTask():
 
-      list_element = getElement(By.CSS_SELECTOR, '#section-13 > div.content > ul')
+      list_element = Finder.browser.find_element(By.CSS_SELECTOR, '#section-13 > div.content > ul')
 
       itens_list_elements = list_element.find_elements(By.TAG_NAME, "li")
 

@@ -1,11 +1,13 @@
-from functions.getElement import getElement
 from selenium.webdriver.common.by import By
 from services.AcessDB import *
+from services.Driver import * 
 
 def login(browser):
-   username = getElement(By.ID, "username")
-   senha = getElement(By.ID, "password")
-   login = getElement(By.XPATH, "//button[contains(@class, 'btn') and contains(@class, 'btn-primary')]")
+   browser = Driver.browser
+
+   username = browser.find_element(By.ID, "username")
+   senha = browser.find_element(By.ID, "password")
+   login = browser.find_element(By.XPATH, "//button[contains(@class, 'btn') and contains(@class, 'btn-primary')]")
 
    reclaim = ["username","password"]
    itens = AcessDB.find("users", reclaim)

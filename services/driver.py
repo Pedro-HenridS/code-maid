@@ -20,4 +20,4 @@ class Driver():
    browser = driver() 
 
 if __name__ == "__driver__":
-    driver()
+    Driver()
