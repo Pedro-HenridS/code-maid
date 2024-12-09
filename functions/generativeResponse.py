@@ -10,7 +10,7 @@ def generativeResponse(question: str):
 
    model = genai.GenerativeModel('gemini-pro')
 
-   res = model.generate_content(f"{question}. Responda mostrando apensa o código.")
+   res = model.generate_content(question).text
    
 
    return res

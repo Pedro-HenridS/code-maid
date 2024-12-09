@@ -16,8 +16,7 @@ def main():
    if db:
       login(browser)
       homepage(browser, 13450)
-      
-      browser.implicitly_wait(5)
+
       links = Finder.findTask()
       
       for link in links:
