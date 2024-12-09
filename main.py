@@ -5,9 +5,6 @@ from services.login import login
 from services.homepage import homepage
 from services.findTask import findTask
 
-
-
-
 def main():
 
    browser = driver.browser
@@ -15,8 +12,7 @@ def main():
    
    if db:
       login(browser)
-      homepage(browser, 45000)
-
+      homepage(browser, 13450)
       browser.implicitly_wait(5)
       findTask()
       
