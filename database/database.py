@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 import os
 
-from services.createCollections import createCollections
+from functions.createCollections import createCollections
 
 def database():
    

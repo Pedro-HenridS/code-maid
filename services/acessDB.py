@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 
-class acessDB():
+class AcessDB():
    
    def find(collection, reclaim): # type: ignore
       

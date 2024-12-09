@@ -1,6 +1,6 @@
 from functions.getElement import getElement
 from selenium.webdriver.common.by import By
-from services.acessDB import *
+from services.AcessDB import *
 
 def login(browser):
    username = getElement(By.ID, "username")
@@ -8,7 +8,7 @@ def login(browser):
    login = getElement(By.XPATH, "//button[contains(@class, 'btn') and contains(@class, 'btn-primary')]")
 
    reclaim = ["username","password"]
-   itens = acessDB.find("users", reclaim)
+   itens = AcessDB.find("users", reclaim)
 
    username.send_keys(itens[0])
    senha.send_keys(itens[1])

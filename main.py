@@ -1,20 +1,26 @@
-from services.driver import driver
+from services.Driver import Driver
+from services.AcessDB import *
+from services.Finder import Finder
+
 from database.database import database
-from services.acessDB import *
-from services.login import login
-from services.homepage import homepage
-from services.findTask import findTask
+
+from functions.login import login
+from functions.homepage import homepage
+from functions.taskMaker import taskMaker
 
 def main():
 
-   browser = driver.browser
+   browser = Driver.browser
    db = database()
    
    if db:
       login(browser)
       homepage(browser, 13450)
       browser.implicitly_wait(5)
-      findTask()
+      links = Finder.findTask()
+      
+      for link in links:
+         taskMaker(link)
       
       input("Pressione Enter para fechar o navegador...")
     

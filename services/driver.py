@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 
-class driver():
+class Driver():
    
    def driver():
       driver_path = "C:\\Users\\Pichau\\.wdm\\drivers\\chromedriver\\win64\\128.0.6613.137\\chromedriver-win32\\chromedriver.exe"
