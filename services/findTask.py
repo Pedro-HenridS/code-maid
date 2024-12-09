@@ -14,8 +14,14 @@ def findTask():
 
    itens_list_elements = list_element.find_elements(By.TAG_NAME, "li")
 
-   for itens in itens_list_elements:
-       link = itens_list_elements[itens].find_element(By.TAG_NAME, "a")
+   for i in range(len(itens_list_elements)):
+       link = itens_list_elements[i].find_element(By.TAG_NAME, "a").get_attribute("href")
+       browser.get(link)
+       browser.back()
+       homepage(browser, 13450)
+       
+       print(link)
+       
 
       
    print("chegou aqui 2")
