@@ -3,11 +3,13 @@ from services.Driver import Driver
 import time
 from functions.generativeResponse import generativeResponse
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
 
 def taskMaker(link): # type: ignore
     browser = Driver.browser
-
     browser.get(link)
+
+    action = ActionChains(browser)
 
     statement_text = browser.find_element(By.CSS_SELECTOR, "#region-main > div > div.box.py-3.generalbox > div > div > p:nth-child(1)").text
 
@@ -19,6 +21,7 @@ def taskMaker(link): # type: ignore
     res = generativeResponse(f"Gere um código Python condizente com o enunciado: '{statement_text}'. Responda mostrando apenas o código. Não coloque 'python' no início. A estrutura base deve ser a de main padrão, ou seja, 'def main():' e 'if __name__ == '__main__': main()'. O código deve ter quebras de linha e identação apropriadas.")
 
     res = res.replace("```", "")
+    res = res.replace("python", "")
     print(res)
 
     res = f""" 
@@ -44,22 +47,35 @@ def taskMaker(link): # type: ignore
          print("Arquivo já existente!")
          print("----------------------------------------------------------------")
 
+    #seleciona o: campo de texto; última linha; botão de save
+    ide_selector = browser.find_element(By.CSS_SELECTOR, "#vpl_file0 > div.ace_scroller > div.ace_content > div:nth-child(2) > div")
+    last_line = browser.find_element(By.CSS_SELECTOR, "#vpl_file0 > div.ace_scroller > div.ace_content > div:nth-child(2) > div")
     
-    ide_selector = browser.find_element(By.CSS_SELECTOR, "#vpl_file0 > div.ace_scroller > div.ace_content")
+    #action.click(ide_selector).perform()
     
+    action.key_down(Keys.ENTER)\
+      .send_keys(" ")\
+      .key_up(Keys.ENTER)\
+      .send_keys(" ")\
+      .perform()
+
+    #Coloca o texto no campo de texto, e configura o css para quebrar linha
+    browser.execute_script("arguments[0].dispatchEvent(new Event('input', { bubbles: true }));", ide_selector)
     browser.execute_script("arguments[0].style.whiteSpace = 'pre-wrap'", ide_selector )
     browser.execute_script("arguments[0].textContent = arguments[1];", ide_selector, res)
     
     print("----------------------------------------------------------------")
     print(ide_selector.text)
     print("----------------------------------------------------------------")
-
+    
+    #last_line.click()
+    #last_line.send_keys()
     save_element = browser.find_element(By.CSS_SELECTOR, "#vpl_ide_save")
 
-    browser.execute_script("arguments[0].className = 'ui-button ui-corner-all ui-widget'", save_element)
+    #browser.execute_script("arguments[0].className = 'ui-button ui-corner-all ui-widget'", save_element)
 
-    time.sleep(3)
     save_element.click()
+    time.sleep(2)
     
     time.sleep(2)
     browser.back()
