@@ -19,7 +19,6 @@ class AcessDB():
                itens.append(document[reclaim[i]])
 
          return itens
-
    
 
 if __name__ == "__AcessDB__":
