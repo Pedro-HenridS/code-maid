@@ -56,25 +56,33 @@ def taskMaker(link): # type: ignore
 
     #Coloca o texto no campo de texto, e configura o css para quebrar linha
     
-
+    i = 0; 
     for line in res.splitlines():
 
-      script = f"""
+     ''' script = f"""
          var newDiv = document.createElement('div');
-         var path = '/html/body/div[1]/div[3]/div/div[4]/div/section/div/div[1]/div[2]/div[2]/div[2]/div[2]/div[1]/div[3]'
+         var path = '/html/body/div[1]/div[3]/div/div[4]/div/section/div/div[1]/div[2]/div[2]/div[2]/div[2]/div[1]/div[3]';
          var ide = document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-         newDiv.class = 'ace_line';
-         newDiv.innerText = '{line}';
-         ide.appendChild(newDiv);
-         """
-      
-      browser.execute_script(script)
+         if (ide) {{
+            newDiv.className = 'ace_line' + {i};
+            newDiv.innerText = `{line}`;
+            ide.appendChild(newDiv);
+            
+            
+         }}
+      """'''
+
+      #browser.execute_script()
+      #i = i + 1
+      #if len(res.splitlines()) - i == 1:
+      #    time.sleep(20000)
 
     save_element = browser.find_element(By.CSS_SELECTOR, "#vpl_ide_save")
-    save_element.click()
-    time.sleep(500)
     
-    time.sleep(2)
+    browser.implicitly_wait(10)
+    #save_element.click()
+    
+    time.sleep(20000)
     browser.back()
 
     return 0
