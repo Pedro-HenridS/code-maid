@@ -22,11 +22,7 @@ def taskMaker(link): # type: ignore
 
     res = res.replace("```", "")
     res = res.replace("python", "")
-    print(res)
-
-    res = f""" 
-      {res}
-   """
+   
     browser.get(edit_section_link)
 
     file_name = browser.find_element(By.CSS_SELECTOR, "#vpl_ide_input_newfilename")
@@ -48,8 +44,7 @@ def taskMaker(link): # type: ignore
          print("----------------------------------------------------------------")
 
     #seleciona o: campo de texto; última linha; botão de save
-    ide_selector = browser.find_element(By.CSS_SELECTOR, "#vpl_file0 > div.ace_scroller > div.ace_content > div:nth-child(2) > div")
-    last_line = browser.find_element(By.CSS_SELECTOR, "#vpl_file0 > div.ace_scroller > div.ace_content > div:nth-child(2) > div")
+    ide_selector = browser.find_elements(By.XPATH, "/html/body/div[1]/div[3]/div/div[4]/div/section/div/div[1]/div[2]/div[2]/div[2]/div[2]/div[1]/div[3]")
     
     #action.click(ide_selector).perform()
     
@@ -60,22 +55,24 @@ def taskMaker(link): # type: ignore
       .perform()
 
     #Coloca o texto no campo de texto, e configura o css para quebrar linha
-    browser.execute_script("arguments[0].dispatchEvent(new Event('input', { bubbles: true }));", ide_selector)
-    browser.execute_script("arguments[0].style.whiteSpace = 'pre-wrap'", ide_selector )
-    browser.execute_script("arguments[0].textContent = arguments[1];", ide_selector, res)
     
-    print("----------------------------------------------------------------")
-    print(ide_selector.text)
-    print("----------------------------------------------------------------")
-    
-    #last_line.click()
-    #last_line.send_keys()
+
+    for line in res.splitlines():
+
+      script = f"""
+         var newDiv = document.createElement('div');
+         var path = '/html/body/div[1]/div[3]/div/div[4]/div/section/div/div[1]/div[2]/div[2]/div[2]/div[2]/div[1]/div[3]'
+         var ide = document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+         newDiv.class = 'ace_line';
+         newDiv.innerText = '{line}';
+         ide.appendChild(newDiv);
+         """
+      
+      browser.execute_script(script)
+
     save_element = browser.find_element(By.CSS_SELECTOR, "#vpl_ide_save")
-
-    #browser.execute_script("arguments[0].className = 'ui-button ui-corner-all ui-widget'", save_element)
-
     save_element.click()
-    time.sleep(2)
+    time.sleep(500)
     
     time.sleep(2)
     browser.back()
