@@ -1,9 +1,9 @@
 from services.Driver import Driver
 from services.AcessDB import *
-from services.Finder import Finder
 
 from database.database import database
 
+from functions.findTask import findTask
 from functions.login import login
 from functions.homepage import homepage
 from functions.taskMaker import taskMaker
@@ -17,7 +17,7 @@ def main():
       login(browser)
       homepage(browser, 13450)
       
-      links = Finder.findTask()
+      links = findTask()
       
       for link in links:
          taskMaker(link)
