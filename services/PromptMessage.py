@@ -14,5 +14,12 @@ class Message():
 
       return 0
    
+   def taskDone():
+      print("----------------------------------------------------------------")
+      print("Tarefa já realizada")
+      print("----------------------------------------------------------------")
+
+      return 0
+   
 if __name__ == "__main__":
    Message()

@@ -71,14 +71,14 @@ def taskMaker(link): # type: ignore
          .key_up(Keys.CONTROL)\
          .key_down(Keys.RETURN)\
          .key_down(Keys.BACKSPACE)\
+         .key_up(Keys.BACKSPACE)\
          .perform()
-      
-      
-                
 
-   
     save_element = browser.find_element(By.CSS_SELECTOR, "#vpl_ide_save")
     action.click(save_element).perform()
+
+    run = browser.find_element(By.XPATH, "/html/body/div[1]/div[3]/div/div[4]/div/section/div/div[1]/div[1]/span[1]/a[3]")
+    action.click(run).perform()
     
     time.sleep(20000)
     browser.back()

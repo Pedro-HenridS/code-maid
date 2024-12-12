@@ -8,6 +8,8 @@ from functions.login import login
 from functions.homepage import homepage
 from functions.taskMaker import taskMaker
 
+import time
+
 def main():
 
    browser = Driver.browser
@@ -17,6 +19,8 @@ def main():
       login(browser)
       homepage(browser, 13450)
       
+
+      time.sleep(2000)
       links = findTask()
       
       for link in links:
